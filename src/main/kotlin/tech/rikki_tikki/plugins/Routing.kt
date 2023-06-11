@@ -14,6 +14,9 @@ fun Application.configureRouting() {
         get("/") {
             call.respondText("Hello World!")
         }
+        get("/api") {
+            call.respondText("Hello World! API!")
+        }
         get<Articles> { article ->
             // Get all articles ...
             call.respond("List of articles sorted starting from ${article.sort}")
