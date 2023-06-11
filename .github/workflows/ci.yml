@@ -30,7 +30,7 @@ jobs:
 
   deploy:
     runs-on: self-hosted
-    needs: build
+    needs: publish_image
 
     env:
       deploy_script: |
