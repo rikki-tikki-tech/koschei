@@ -54,15 +54,16 @@ jobs:
     steps:
       - name: 🚀 Deploy to server Svarog via SSH action
         uses: appleboy/ssh-action@v1.0.3
+        env:
+          JDBC_URL: ${{ secrets.JDBC_URL }}
+          JDBC_USERNAME: ${{ secrets.JDBC_USERNAME }}
+          JDBC_PASSWORD: ${{ secrets.JDBC_PASSWORD }}
+          JWT_DOMAIN: ${{ secrets.JWT_DOMAIN }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
         with:
           host: ${{ secrets.DEPLOY_HOST_KOSCHEI }}
           username: "koschei"
           key: ${{ secrets.DEPLOY_KEY }}
           script_stop: true
           script: ${{ env.deploy_script }}
-          envs: |
-            JDBC_URL=${{ secrets.JDBC_URL }}
-            JDBC_USERNAME=${{ secrets.JDBC_USERNAME }}
-            JDBC_PASSWORD=${{ secrets.JDBC_PASSWORD }}
-            JWT_DOMAIN=${{ secrets.JWT_DOMAIN }}
-            JWT_SECRET=${{ secrets.JWT_SECRET }}
+          envs: JDBC_URL,JDBC_USERNAME,JDBC_PASSWORD,JWT_DOMAIN,JWT_SECRET
