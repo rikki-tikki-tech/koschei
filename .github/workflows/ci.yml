@@ -50,8 +50,8 @@ jobs:
       - name: 🚀 Deploy to server Svarog via SSH action
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ${{ secrets.DEPLOY_HOST_SVAROG }}
-          username: ${{ secrets.DEPLOY_USERNAME }}
+          host: ${{ secrets.DEPLOY_HOST_KOSCHEI }}
+          username: "koschei"
           key: ${{ secrets.DEPLOY_KEY }}
           script_stop: true
           script: ${{ env.deploy_script }}
