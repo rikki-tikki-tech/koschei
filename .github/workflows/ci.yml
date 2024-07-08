@@ -48,9 +48,10 @@ jobs:
 
     steps:
       - name: 🚀 Deploy to server Svarog via SSH action
-        uses: fifsky/ssh-action@master
+        uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ${{ secrets.DEPLOY_HOST_KOSCHEI }}
-          username: "koschei"
+          host: ${{ secrets.DEPLOY_HOST_SVAROG }}
+          username: ${{ secrets.DEPLOY_USERNAME }}
           key: ${{ secrets.DEPLOY_KEY }}
-          command: ${{ env.deploy_script }}
+          script_stop: true
+          script: ${{ env.deploy_script }}
