@@ -50,6 +50,7 @@ jobs:
           script_stop: true
           envs: JDBC_URL,JDBC_USERNAME,JDBC_PASSWORD,JWT_DOMAIN,JWT_SECRET
           script: |
+            env
             echo "I am $FOO"
             echo "I am $BAR"
             echo "sha: $SHA"
