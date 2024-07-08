@@ -33,6 +33,10 @@ jobs:
     needs: publish_image
     env:
       deploy_script: |
+        echo "I am $FOO"
+        echo "I am $BAR"
+        echo "sha: $JDBC_URL"
+        
         # Clean old images
         docker container prune -f
         docker image prune -f
@@ -60,6 +64,8 @@ jobs:
           JDBC_PASSWORD: ${{ secrets.JDBC_PASSWORD }}
           JWT_DOMAIN: ${{ secrets.JWT_DOMAIN }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          FOO: "BAR"
+          BAR: "FOO"
         with:
           host: ${{ secrets.DEPLOY_HOST_KOSCHEI }}
           username: "koschei"
