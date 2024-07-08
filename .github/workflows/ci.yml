@@ -31,29 +31,6 @@ jobs:
   deploy:
     runs-on: self-hosted
     needs: publish_image
-    env:
-      deploy_script: |
-        echo "I am $FOO"
-        echo "I am $BAR"
-        echo "sha: $JDBC_URL"
-        
-        # Clean old images
-        docker container prune -f
-        docker image prune -f
-
-        # Start
-        if [[ -n "$(docker ps -a -q)" ]]; then docker stop $(docker ps -a -q); fi
-
-        docker pull utrobin/koschei
-        docker run -d --restart always -p 50051:50051 \
-        -e JDBC_URL="$JDBC_URL" \
-        -e JDBC_USERNAME="$JDBC_USERNAME" \
-        -e JDBC_PASSWORD="$JDBC_PASSWORD" \
-        -e JWT_DOMAIN="$JWT_DOMAIN" \
-        -e JWT_SECRET="$JWT_SECRET" \
-        utrobin/koschei
-
-        echo Container updated successfully.
 
     steps:
       - name: 🚀 Deploy to server Svarog via SSH action
@@ -71,5 +48,27 @@ jobs:
           username: "koschei"
           key: ${{ secrets.DEPLOY_KEY }}
           script_stop: true
-          script: ${{ env.deploy_script }}
           envs: JDBC_URL,JDBC_USERNAME,JDBC_PASSWORD,JWT_DOMAIN,JWT_SECRET
+          script: |
+            echo "I am $FOO"
+            echo "I am $BAR"
+            echo "sha: $SHA"
+            
+            # Clean old images
+            docker container prune -f
+            docker image prune -f
+    
+            # Start
+            if [[ -n "$(docker ps -a -q)" ]]; then docker stop $(docker ps -a -q); fi
+    
+            docker pull utrobin/koschei
+            docker run -d --restart always -p 50051:50051 \
+            -e JDBC_URL="$JDBC_URL" \
+            -e JDBC_USERNAME="$JDBC_USERNAME" \
+            -e JDBC_PASSWORD="$JDBC_PASSWORD" \
+            -e JWT_DOMAIN="$JWT_DOMAIN" \
+            -e JWT_SECRET="$JWT_SECRET" \
+            utrobin/koschei
+    
+            echo Container updated successfully.
+          
