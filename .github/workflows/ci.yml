@@ -32,11 +32,6 @@ jobs:
     runs-on: self-hosted
     needs: publish_image
     env:
-      JDBC_URL: ${{ secrets.JDBC_URL }}
-      JDBC_USERNAME: ${{ secrets.JDBC_USERNAME }}
-      JDBC_PASSWORD: ${{ secrets.JDBC_PASSWORD }}
-      JWT_DOMAIN: ${{ secrets.JWT_DOMAIN }}
-      JWT_SECRET: ${{ secrets.JWT_SECRET }}
       deploy_script: |
         # Clean old images
         docker container prune -f
