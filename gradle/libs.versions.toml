@@ -1,0 +1,49 @@
+[plugins]
+java-library = { id = "java-library" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version = "2.0.0" }
+protobuf = { id = "com.google.protobuf", version = "0.9.4" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version = "12.1.0" }
+palantir-graal = { id = "com.palantir.graal", version = "0.12.0" }
+jib = { id = "com.google.cloud.tools.jib", version = "3.4.3" }
+jooq = { id = "nu.studer.jooq", version = "9.0" }
+flyway = { id = "org.flywaydb.flyway", version = "10.14.0" }
+
+[libraries]
+kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version = "2.0.0" }
+kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version = "1.8.0" }
+grpc-protobuf = { group = "io.grpc", name = "grpc-protobuf", version = "1.62.2" }
+grpc-protobuf-lite = { group = "io.grpc", name = "grpc-protobuf-lite", version = "1.62.2" }
+grpc-netty = { group = "io.grpc", name = "grpc-netty", version = "1.62.2" }
+grpc-okhttp = { group = "io.grpc", name = "grpc-okhttp", version = "1.62.2" }
+grpc-testing = { group = "io.grpc", name = "grpc-testing", version = "1.62.2" }
+grpc-stub = { group = "io.grpc", name = "grpc-stub", version = "1.62.2" }
+grpc-kotlin-stub = { group = "io.grpc", name = "grpc-kotlin-stub", version = "1.4.1" }
+
+slf4j = { module = "org.slf4j:slf4j-api", version = "2.0.13" }
+logback = { module = "ch.qos.logback:logback-classic", version = "1.5.6" }
+
+koin-core = { module = "io.insert-koin:koin-core", version = "3.5.6" }
+koin-core-ext = { module = "io.insert-koin:koin-core-ext", version = "3.0.2" }
+koin-logger-slf4j = { module = "io.insert-koin:koin-logger-slf4j", version = "3.5.6" }
+
+protoc = { group = "com.google.protobuf", name = "protoc", version = "3.25.3" }
+protobuf-kotlin = { group = "com.google.protobuf", name = "protobuf-kotlin", version = "3.25.3" }
+protobuf-kotlin-lite = { group = "com.google.protobuf", name = "protobuf-kotlin-lite", version = "3.25.3" }
+protobuf-java-util = { group = "com.google.protobuf", name = "protobuf-java-util", version = "3.25.3" }
+protoc-gen-grpc-java = { group = "io.grpc", name = "protoc-gen-grpc-java", version = "1.62.2" }
+protoc-gen-grpc-kotlin = { group = "io.grpc", name = "protoc-gen-grpc-kotlin", version = "1.4.1" }
+proto-google-common-protos = { group = "com.google.api.grpc", name = "proto-google-common-protos", version = "2.7.0" }
+
+bcrypt = { group = "at.favre.lib", name = "bcrypt", version = "0.10.2" }
+java-jwt = { group = "com.auth0", name = "java-jwt", version = "4.4.0" }
+
+config = { group = "com.typesafe", name = "config", version = "1.4.3" }
+dotenv-kotlin = { group = "io.github.cdimascio", name = "dotenv-kotlin", version = "6.4.0" }
+
+flywayCore = { group = "org.flywaydb", name = "flyway-core", version = "10.14.0" }
+hikariCP = { group = "com.zaxxer", name = "HikariCP", version = "5.1.0" }
+jooq = { group = "org.jooq", name = "jooq", version = "3.19.9" }
+postgresql = { group = "org.postgresql", name = "postgresql", version = "42.7.3" }
+flyway-database-postgresql = { group = "org.flywaydb", name = "flyway-database-postgresql", version = "10.14.0" }
+
+kotlin-test-junit = { group = "org.jetbrains.kotlin", name = "kotlin-test-junit", version = "1.9.23" }
