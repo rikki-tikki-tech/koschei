@@ -32,6 +32,11 @@ jobs:
     runs-on: self-hosted
     needs: publish_image
     env:
+      JDBC_URL: ${{ secrets.JDBC_URL }}
+      JDBC_USERNAME: ${{ secrets.JDBC_USERNAME }}
+      JDBC_PASSWORD: ${{ secrets.JDBC_PASSWORD }}
+      JWT_DOMAIN: ${{ secrets.JWT_DOMAIN }}
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
       deploy_script: |
         # Clean old images
         docker container prune -f
@@ -42,11 +47,11 @@ jobs:
 
         docker pull utrobin/koschei
         docker run -d --restart always -p 50051:50051 \
-        -e JDBC_URL="${{ secrets.JDBC_URL }}" \
-        -e JDBC_USERNAME="${{ secrets.JDBC_USERNAME }}" \
-        -e JDBC_PASSWORD="${{ secrets.JDBC_PASSWORD }}" \
-        -e JWT_DOMAIN="${{ secrets.JWT_DOMAIN }}" \
-        -e JWT_SECRET="${{ secrets.JWT_SECRET }}" \
+        -e JDBC_URL="$JDBC_URL" \
+        -e JDBC_USERNAME="$JDBC_USERNAME" \
+        -e JDBC_PASSWORD="$JDBC_PASSWORD" \
+        -e JWT_DOMAIN="$JWT_DOMAIN" \
+        -e JWT_SECRET="$JWT_SECRET" \
         utrobin/koschei
 
         echo Container updated successfully.
