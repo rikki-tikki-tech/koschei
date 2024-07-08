@@ -7,10 +7,10 @@ import com.typesafe.config.ConfigFactory
 import io.github.cdimascio.dotenv.dotenv
 
 fun loadConfig(): Config {
-    val dotenv = dotenv()
-    dotenv.entries().forEach { entry ->
-        System.setProperty(entry.key, entry.value)
-    }
+//    val dotenv = dotenv()
+//    dotenv.entries().forEach { entry ->
+//        System.setProperty(entry.key, entry.value)
+//    }
 
     val config = ConfigFactory.load()
 
