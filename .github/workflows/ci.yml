@@ -46,7 +46,13 @@ jobs:
         if [[ -n "$(docker ps -a -q)" ]]; then docker stop $(docker ps -a -q); fi
 
         docker pull utrobin/koschei
-        docker run -d --restart always -p 50051:50051 utrobin/koschei
+        docker run -d --restart always -p 50051:50051 \
+        -e JDBC_URL="${{ secrets.JDBC_URL }}" \
+        -e JDBC_USERNAME="${{ secrets.JDBC_USERNAME }}" \
+        -e JDBC_PASSWORD="${{ secrets.JDBC_PASSWORD }}" \
+        -e JWT_DOMAIN="${{ secrets.JWT_DOMAIN }}" \
+        -e JWT_SECRET="${{ secrets.JWT_SECRET }}" \
+        utrobin/koschei
 
         echo Container updated successfully.
 
