@@ -6,7 +6,7 @@ plugins {
 }
 
 kotlin {
-    jvmToolchain(17)
+    jvmToolchain(21)
 }
 
 dependencies {
@@ -77,13 +77,13 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().all {
 
 jib {
     from {
-        image = "gcr.io/distroless/java17-debian12"
+        image = "eclipse-temurin:21"
     }
     to {
-        image = "koschei"
+        image = "docker.io/${System.getenv("DOCKERHUB_USERNAME")}/koschei"
         auth {
-            username = providers.environmentVariable("DOCKERHUB_USERNAME").get()
-            password = providers.environmentVariable("DOCKERHUB_TOKEN").get()
+            username = System.getenv("DOCKERHUB_USERNAME")
+            password = System.getenv("DOCKERHUB_TOKEN")
         }
     }
     container {
