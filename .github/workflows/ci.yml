@@ -48,12 +48,12 @@ jobs:
           username: "koschei"
           key: ${{ secrets.DEPLOY_KEY }}
           script_stop: true
-          envs: JDBC_URL,JDBC_USERNAME,JDBC_PASSWORD,JWT_DOMAIN,JWT_SECRET
+          envs: JDBC_URL,JDBC_USERNAME,JDBC_PASSWORD,JWT_DOMAIN,JWT_SECRET,FOO,BAR
           script: |
             env
             echo "I am $FOO"
             echo "I am $BAR"
-            echo "sha: $SHA"
+            echo "sha: $JDBC_URL"
             
             # Clean old images
             docker container prune -f
