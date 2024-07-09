@@ -42,21 +42,13 @@ jobs:
           JDBC_PASSWORD: ${{ secrets.JDBC_PASSWORD }}
           JWT_DOMAIN: ${{ secrets.JWT_DOMAIN }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
-          test: ${{ secrets.test }}
-          FOO: "BAR"
-          BAR: "FOO"
         with:
           host: ${{ secrets.DEPLOY_HOST_KOSCHEI }}
           username: "koschei"
           key: ${{ secrets.DEPLOY_KEY }}
           script_stop: true
-          envs: JDBC_URL,JDBC_USERNAME,JDBC_PASSWORD,JWT_DOMAIN,JWT_SECRET,FOO,BAR,test
-          script: |
-            env
-            echo "I am $FOO"
-            echo "I am $BAR"
-            echo "sha: $JDBC_URL"
-            
+          envs: JDBC_URL,JDBC_USERNAME,JDBC_PASSWORD,JWT_DOMAIN,JWT_SECRET
+          script: |            
             # Clean old images
             docker container prune -f
             docker image prune -f
