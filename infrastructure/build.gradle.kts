@@ -12,16 +12,12 @@ kotlin {
 dependencies {
     implementation(project(":domain"))
     implementation(project(":application"))
-    implementation(project(":adapters:postgresql"))
     implementation(project(":adapters:logging"))
     implementation(project(":adapters:config"))
-    implementation(project(":adapters:authentication"))
     implementation(project(":ports:grpc"))
 
     api(libs.kotlinx.coroutines.core)
 
-    api(libs.koin.core)
-    api(libs.koin.core.ext)
     api(libs.koin.logger.slf4j)
 
     api(libs.slf4j)

@@ -3,6 +3,7 @@ package application.usecases.user
 import application.dependency.Logger
 import application.model.UserModel
 import application.usecases.Usecase
+import domain.exception.IdInvalidException
 import domain.exception.UserNotFoundException
 import domain.repository.user.UserRepository
 import kotlin.reflect.typeOf
@@ -13,6 +14,10 @@ class GetUser(
     private val repository: UserRepository,
 ) : Usecase<String, UserModel>(typeOf<String>(), typeOf<UserModel>(), logger) {
     override suspend fun executor(id: String): UserModel {
+        if (id.isBlank()) {
+            throw IdInvalidException()
+        }
+
         return repository.findById(id)?.let { UserModel(it) } ?: throw UserNotFoundException()
     }
 }

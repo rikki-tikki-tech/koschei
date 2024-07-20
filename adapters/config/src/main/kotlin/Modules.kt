@@ -1,23 +1,12 @@
-package infrastructure.modules
+package adapters.config
 
 import adapters.authentication.JWTAuthenticatorImpl
 import adapters.authentication.PasswordEncoderImpl
-import adapters.config.Config
-import adapters.config.JDBC
-import adapters.config.JWTConfig
 import adapters.logging.LoggerImpl
 import adapters.postgresql.DatabaseUtils
-import adapters.postgresql.repository.user.UserRepositoryImpl
 import application.dependency.Authenticator
 import application.dependency.Logger
 import application.dependency.PasswordEncoder
-import application.usecases.user.AuthenticateUser
-import application.usecases.user.CreateUser
-import application.usecases.user.GetUser
-import application.usecases.user.SignInUser
-import application.usecases.user.UpdateUser
-import application.usecases.user.UserExists
-import domain.repository.user.UserRepository
 import org.jooq.DSLContext
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.bind
@@ -50,12 +39,18 @@ private fun databaseModule(jdbc: JDBC) =
         }
     }
 
+private fun commonModule() =
+    module {
+        singleOf(::LoggerImpl) {
+            bind<Logger>()
+        }
+    }
+
 private fun userModule(jwtConfig: JWTConfig) =
     module {
-        singleOf(::UserRepositoryImpl) {
-            bind<UserRepository>()
-            createdAtStart()
-        }
+        usecasesAndRepositories("user")
+
+        factoryOf(::UserService)
 
         single<Authenticator> {
             JWTAuthenticatorImpl(
@@ -69,34 +64,10 @@ private fun userModule(jwtConfig: JWTConfig) =
         }
     }
 
-private fun loggerModule() =
-    module {
-        singleOf(::LoggerImpl) {
-            bind<Logger>()
-        }
-    }
-
-private fun usecasesModule() =
-    module {
-        factoryOf(::GetUser)
-        factoryOf(::CreateUser)
-        factoryOf(::UserExists)
-        factoryOf(::UpdateUser)
-        factoryOf(::SignInUser)
-        factoryOf(::AuthenticateUser)
-    }
-
-private fun servicesModule() =
-    module {
-        factoryOf(::UserService)
-    }
-
 fun modules(config: Config): List<Module> {
     return listOf(
         databaseModule(config.jdbc),
-        loggerModule(),
+        commonModule(),
         userModule(config.jwt),
-        usecasesModule(),
-        servicesModule(),
     )
 }

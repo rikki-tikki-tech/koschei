@@ -1,9 +1,9 @@
-package adapters.postgresql.repository.user
+package repositories.user
 
 import adapters.postgresql.generated.tables.daos.UserProfileDao
 import adapters.postgresql.generated.tables.pojos.UserProfile
 import adapters.postgresql.generated.tables.records.UserProfileRecord
-import adapters.postgresql.repository.AbstractRepository
+import adapters.postgresql.repositories.AbstractRepository
 import domain.entity.user.Email
 import domain.entity.user.PasswordHash
 import domain.entity.user.User
@@ -12,8 +12,8 @@ import org.jooq.DSLContext
 import java.time.ZoneOffset
 
 class UserRepositoryImpl(dslContext: DSLContext) :
-    AbstractRepository<User, String, UserProfile, UserProfileRecord, UserProfileDao>(UserProfileDao(dslContext.configuration())),
-    UserRepository {
+    UserRepository,
+    AbstractRepository<User, String, UserProfile, UserProfileRecord, UserProfileDao>(UserProfileDao(dslContext.configuration())) {
     override suspend fun findByEmail(email: Email): User? {
         return dao.fetchOneByEmail(email.value)?.toDomain()
     }

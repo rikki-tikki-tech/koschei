@@ -11,6 +11,9 @@ open class InvalidPropertyException(message: String? = null, base: String = "Inv
 class EmailInvalidException(message: String? = null, base: String = "Email invalid") :
     InvalidPropertyException(message, base)
 
+class IdInvalidException(message: String? = null, base: String = "ID cannot be blank or empty") :
+    InvalidPropertyException(message, base)
+
 open class NotFoundException(message: String? = null, base: String = "Not found") : Exception(message(base, message))
 
 class UserNotFoundException(message: String? = null, base: String = "User not found") : NotFoundException(message, base)

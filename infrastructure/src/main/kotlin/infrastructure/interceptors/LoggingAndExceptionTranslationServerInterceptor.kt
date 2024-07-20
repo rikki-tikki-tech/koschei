@@ -1,6 +1,15 @@
 package infrastructure.interceptors
 
 import application.dependency.Logger
+import domain.exception.AlreadyExistsException
+import domain.exception.AuthenticationException
+import domain.exception.EmailAlreadyExistsException
+import domain.exception.EmailInvalidException
+import domain.exception.InvalidPropertyException
+import domain.exception.NotFoundException
+import domain.exception.PasswordInvalidException
+import domain.exception.SignInException
+import domain.exception.UserNotFoundException
 import io.grpc.ForwardingServerCall
 import io.grpc.ForwardingServerCallListener
 import io.grpc.Metadata
@@ -20,16 +29,26 @@ class LoggingAndExceptionTranslationServerInterceptor(private val logger: Logger
             val newStatus =
                 if (!status.isOk) {
                     val cause = status.cause
-                    logger.error("Closing due to error. $cause")
+                    logger.error("Closing due to error. Cause: ${cause?.javaClass?.simpleName}: ${cause?.message}")
 
                     if (status.code == Status.Code.UNKNOWN) {
-                        val newStatus =
-                            when (cause) {
-                                is IllegalArgumentException -> Status.INVALID_ARGUMENT
-                                is IllegalStateException -> Status.FAILED_PRECONDITION
-                                else -> Status.UNKNOWN
-                            }
-                        newStatus.withDescription(cause?.message).withCause(cause)
+                        when (cause) {
+                            is InvalidPropertyException -> Status.INVALID_ARGUMENT.withDescription(cause.message)
+                            is EmailInvalidException -> Status.INVALID_ARGUMENT.withDescription(cause.message)
+                            is PasswordInvalidException -> Status.INVALID_ARGUMENT.withDescription(cause.message)
+                            is EmailInvalidException -> Status.INVALID_ARGUMENT.withDescription(cause.message)
+
+                            is SignInException -> Status.UNAUTHENTICATED.withDescription(cause.message)
+                            is AuthenticationException -> Status.UNAUTHENTICATED.withDescription(cause.message)
+
+                            is UserNotFoundException -> Status.NOT_FOUND.withDescription(cause.message)
+                            is NotFoundException -> Status.NOT_FOUND.withDescription(cause.message)
+
+                            is AlreadyExistsException -> Status.ALREADY_EXISTS.withDescription(cause.message)
+                            is EmailAlreadyExistsException -> Status.ALREADY_EXISTS.withDescription(cause.message)
+
+                            else -> Status.UNKNOWN
+                        }
                     } else {
                         status
                     }

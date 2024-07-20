@@ -1,5 +1,3 @@
-@file:Suppress("ktlint:standard:filename")
-
 package ports.grpc.services.user
 
 import application.model.CreateUserModel

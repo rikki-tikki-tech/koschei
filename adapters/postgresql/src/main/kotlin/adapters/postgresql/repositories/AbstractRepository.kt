@@ -1,4 +1,4 @@
-package adapters.postgresql.repository
+package adapters.postgresql.repositories
 
 import domain.entity.Entity
 import domain.repository.Repository

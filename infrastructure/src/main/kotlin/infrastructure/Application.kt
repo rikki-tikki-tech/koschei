@@ -1,5 +1,6 @@
 package infrastructure
 
+import adapters.config.modules
 import application.dependency.Logger
 import infrastructure.interceptors.LoggingAndExceptionTranslationServerInterceptor
 import io.grpc.Server
@@ -48,7 +49,7 @@ fun main() {
 
     startKoin {
         slf4jLogger()
-        modules(infrastructure.modules.modules(config))
+        modules(modules(config))
     }
 
     val port = System.getenv("PORT")?.toInt() ?: 50051
