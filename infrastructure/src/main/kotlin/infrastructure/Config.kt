@@ -4,12 +4,18 @@ import adapters.config.Config
 import adapters.config.JDBC
 import adapters.config.JWTConfig
 import com.typesafe.config.ConfigFactory
+import io.github.cdimascio.dotenv.DotenvException
+import io.github.cdimascio.dotenv.dotenv
 
 fun loadConfig(): Config {
-//    val dotenv = dotenv()
-//    dotenv.entries().forEach { entry ->
-//        System.setProperty(entry.key, entry.value)
-//    }
+    try {
+        val dotenv = dotenv()
+        dotenv.entries().forEach { entry ->
+            System.setProperty(entry.key, entry.value)
+        }
+    } catch (e: DotenvException) {
+        println("Warning: .env file is missing or cannot be read.")
+    }
 
     val config = ConfigFactory.load()
 

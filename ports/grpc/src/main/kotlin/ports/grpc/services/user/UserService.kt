@@ -35,7 +35,7 @@ class UserService(
     private val authenticateUser: AuthenticateUser,
 ) : UsersGrpcKt.UsersCoroutineImplBase() {
     override suspend fun getUser(request: GetUserRequest): User {
-        val userModel = getUser(request.name)
+        val userModel = getUser(request.id)
         return userModel.toGrpcUser()
     }
 
@@ -53,7 +53,7 @@ class UserService(
 
         return AuthenticateUserResponse
             .newBuilder()
-            .setName(user)
+            .setId(user)
             .build()
     }
 
@@ -79,7 +79,7 @@ class UserService(
     }
 
     override suspend fun updateUser(request: UpdateUserRequest): User {
-        val existingUser = getUser(request.user.name)
+        val existingUser = getUser(request.user.id)
 
         val builder = existingUser.toGrpcUser().toBuilder()
         FieldMaskUtil.merge(request.updateMask, request.user, builder)
@@ -96,7 +96,7 @@ class UserService(
         val userModel =
             updateUser(
                 UpdateUserModel(
-                    id = updatedUserProto.name,
+                    id = updatedUserProto.id,
                     email = Email(updatedUserProto.email),
                     firstName = updatedUserProto.firstName,
                     birthdayDate = birthdayDate,
@@ -109,7 +109,7 @@ class UserService(
     private fun UserModel.toGrpcUser(): User {
         val grpcUserBuilder =
             User.newBuilder()
-                .setName(this.id)
+                .setId(this.id)
                 .setEmail(this.email.value)
                 .setFirstName(this.firstName)
 
