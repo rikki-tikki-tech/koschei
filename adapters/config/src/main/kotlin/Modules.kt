@@ -2,9 +2,11 @@ package adapters.config
 
 import adapters.authentication.JWTAuthenticatorImpl
 import adapters.authentication.PasswordEncoderImpl
+import adapters.google.oauth.GoogleOAuthImpl
 import adapters.logging.LoggerImpl
 import adapters.postgresql.DatabaseUtils
 import application.dependency.Authenticator
+import application.dependency.GoogleOAuth
 import application.dependency.Logger
 import application.dependency.PasswordEncoder
 import org.jooq.DSLContext
@@ -46,7 +48,7 @@ private fun commonModule() =
         }
     }
 
-private fun userModule(jwtConfig: JWTConfig) =
+private fun userModule(config: Config) =
     module {
         usecasesAndRepositories("user")
 
@@ -54,8 +56,16 @@ private fun userModule(jwtConfig: JWTConfig) =
 
         single<Authenticator> {
             JWTAuthenticatorImpl(
-                issuer = jwtConfig.domain,
-                secret = jwtConfig.secret,
+                issuer = config.jwt.domain,
+                secret = config.jwt.secret,
+            )
+        }
+
+        single<GoogleOAuth> {
+            GoogleOAuthImpl(
+                clientId = config.googleOAuth.clientId,
+                clientSecret = config.googleOAuth.clientSecret,
+                redirectUri = config.googleOAuth.redirectUri,
             )
         }
 
@@ -68,6 +78,6 @@ fun modules(config: Config): List<Module> {
     return listOf(
         databaseModule(config.jdbc),
         commonModule(),
-        userModule(config.jwt),
+        userModule(config),
     )
 }

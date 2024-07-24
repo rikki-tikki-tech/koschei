@@ -30,5 +30,8 @@ class PasswordInvalidException(message: String? = null, base: String = "Password
 class SignInException(message: String? = null, base: String = "Invalid authentication") :
     Exception(message(base, message))
 
+class GoogleOAuthException(message: String? = null, base: String = "Invalid argument") :
+    Exception(message(base, message))
+
 class AuthenticationException(message: String? = null, base: String = "Invalid authentication") :
     Exception(message(base, message))

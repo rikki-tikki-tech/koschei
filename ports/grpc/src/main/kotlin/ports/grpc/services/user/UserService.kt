@@ -7,6 +7,7 @@ import application.model.UserModel
 import application.usecases.user.AuthenticateUser
 import application.usecases.user.CreateUser
 import application.usecases.user.GetUser
+import application.usecases.user.GoogleSignInOrSignUpUser
 import application.usecases.user.SignInUser
 import application.usecases.user.UpdateUser
 import com.google.protobuf.util.FieldMaskUtil
@@ -17,6 +18,8 @@ import domain.entity.user.Token
 import koschei.ports.grpc.proto.v1.AuthenticateUserRequest
 import koschei.ports.grpc.proto.v1.AuthenticateUserResponse
 import koschei.ports.grpc.proto.v1.GetUserRequest
+import koschei.ports.grpc.proto.v1.GoogleSignInOrSignUpUserRequest
+import koschei.ports.grpc.proto.v1.GoogleSignInOrSignUpUserResponse
 import koschei.ports.grpc.proto.v1.SignInUserRequest
 import koschei.ports.grpc.proto.v1.SignInUserResponse
 import koschei.ports.grpc.proto.v1.SignUpUserRequest
@@ -33,6 +36,7 @@ class UserService(
     private val updateUser: UpdateUser,
     private val signInUser: SignInUser,
     private val authenticateUser: AuthenticateUser,
+    private val googleSignInOrSignUpUser: GoogleSignInOrSignUpUser,
 ) : UsersGrpcKt.UsersCoroutineImplBase() {
     override suspend fun getUser(request: GetUserRequest): User {
         val userModel = getUser(request.id)
@@ -104,6 +108,15 @@ class UserService(
             )
 
         return userModel.toGrpcUser()
+    }
+
+    override suspend fun googleSignInOrSignUpUser(request: GoogleSignInOrSignUpUserRequest): GoogleSignInOrSignUpUserResponse {
+        val token = googleSignInOrSignUpUser(request.codeToken)
+
+        return GoogleSignInOrSignUpUserResponse
+            .newBuilder()
+            .setToken(token)
+            .build()
     }
 
     private fun UserModel.toGrpcUser(): User {

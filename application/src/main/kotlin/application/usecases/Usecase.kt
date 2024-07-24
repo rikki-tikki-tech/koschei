@@ -5,7 +5,7 @@ import kotlin.reflect.KType
 
 sealed class UsecaseType<R : Any>(
     val result: KType,
-    private val logger: Logger,
+    val logger: Logger,
 ) {
     abstract val args: List<KType>
     open val logging = true

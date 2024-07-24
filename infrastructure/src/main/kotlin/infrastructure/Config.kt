@@ -1,6 +1,7 @@
 package infrastructure
 
 import adapters.config.Config
+import adapters.config.GoogleOAuthConfig
 import adapters.config.JDBC
 import adapters.config.JWTConfig
 import com.typesafe.config.ConfigFactory
@@ -33,6 +34,12 @@ fun loadConfig(): Config {
             JWTConfig(
                 domain = config.getString("jwt.domain"),
                 secret = config.getString("jwt.secret"),
+            ),
+        googleOAuth =
+            GoogleOAuthConfig(
+                clientId = config.getString("google-oauth.clientId"),
+                clientSecret = config.getString("google-oauth.clientSecret"),
+                redirectUri = config.getString("google-oauth.redirectUri"),
             ),
     )
 }

@@ -65,3 +65,8 @@ data class SignInUserModel(
     val email: Email,
     val password: Password,
 )
+
+data class OAuthUserInfoModel(
+    val email: Email,
+    val firstName: String? = null,
+)

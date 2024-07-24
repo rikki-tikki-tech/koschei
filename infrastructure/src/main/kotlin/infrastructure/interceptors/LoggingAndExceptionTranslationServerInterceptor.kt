@@ -5,6 +5,7 @@ import domain.exception.AlreadyExistsException
 import domain.exception.AuthenticationException
 import domain.exception.EmailAlreadyExistsException
 import domain.exception.EmailInvalidException
+import domain.exception.GoogleOAuthException
 import domain.exception.InvalidPropertyException
 import domain.exception.NotFoundException
 import domain.exception.PasswordInvalidException
@@ -37,6 +38,7 @@ class LoggingAndExceptionTranslationServerInterceptor(private val logger: Logger
                             is EmailInvalidException -> Status.INVALID_ARGUMENT.withDescription(cause.message)
                             is PasswordInvalidException -> Status.INVALID_ARGUMENT.withDescription(cause.message)
                             is EmailInvalidException -> Status.INVALID_ARGUMENT.withDescription(cause.message)
+                            is GoogleOAuthException -> Status.INVALID_ARGUMENT.withDescription(cause.message)
 
                             is SignInException -> Status.UNAUTHENTICATED.withDescription(cause.message)
                             is AuthenticationException -> Status.UNAUTHENTICATED.withDescription(cause.message)

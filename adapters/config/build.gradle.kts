@@ -8,6 +8,7 @@ dependencies {
     implementation(project(":adapters:postgresql"))
     implementation(project(":adapters:authentication"))
     implementation(project(":adapters:logging"))
+    implementation(project(":adapters:google-oauth"))
     implementation(project(":ports:grpc"))
 
     api(libs.koin.core)

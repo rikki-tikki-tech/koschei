@@ -7,6 +7,7 @@ include(
     "adapters:logging",
     "adapters:authentication",
     "adapters:config",
+    "adapters:google-oauth",
     "ports:grpc",
     "infrastructure",
 )
