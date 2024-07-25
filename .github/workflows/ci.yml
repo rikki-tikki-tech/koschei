@@ -42,6 +42,7 @@ jobs:
           JDBC_PASSWORD: ${{ secrets.JDBC_PASSWORD }}
           JWT_DOMAIN: ${{ secrets.JWT_DOMAIN }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          GOOGLE_OAUTH_CLIENT_SECRET: ${{ secrets.GOOGLE_OAUTH_CLIENT_SECRET }}
         with:
           host: ${{ secrets.DEPLOY_HOST_KOSCHEI }}
           username: "koschei"
@@ -63,6 +64,7 @@ jobs:
             -e JDBC_PASSWORD="$JDBC_PASSWORD" \
             -e JWT_DOMAIN="$JWT_DOMAIN" \
             -e JWT_SECRET="$JWT_SECRET" \
+            -e GOOGLE_OAUTH_CLIENT_SECRET="$GOOGLE_OAUTH_CLIENT_SECRET" \
             utrobin/koschei
     
             echo Container updated successfully.
