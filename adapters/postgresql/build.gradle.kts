@@ -24,9 +24,9 @@ buildscript {
 }
 
 flyway {
-    url = "jdbc:postgresql://rc1b-32ga3u62hchuy77p.mdb.yandexcloud.net:6432/koschei?targetServerType=master"
-    user = "koschei"
-    password = "54154167q"
+    url = System.getenv("JDBC_URL")
+    user = System.getenv("JDBC_USERNAME")
+    password = System.getenv("JDBC_PASSWORD")
 }
 
 jooq {
@@ -36,9 +36,9 @@ jooq {
             jooqConfiguration.apply {
                 jdbc.apply {
                     driver = "org.postgresql.Driver"
-                    url = "jdbc:postgresql://rc1b-32ga3u62hchuy77p.mdb.yandexcloud.net:6432/koschei?targetServerType=master"
-                    user = "koschei"
-                    password = "54154167q"
+                    url = System.getenv("JDBC_URL")
+                    user = System.getenv("JDBC_USERNAME")
+                    password = System.getenv("JDBC_PASSWORD")
                 }
                 generator.apply {
                     name = "org.jooq.codegen.KotlinGenerator"

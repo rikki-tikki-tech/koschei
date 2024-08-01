@@ -27,36 +27,36 @@ class LoggingAndExceptionTranslationServerInterceptor(private val logger: Logger
             status: Status,
             trailers: Metadata,
         ) {
-            val newStatus =
-                if (!status.isOk) {
-                    val cause = status.cause
-                    logger.error("Closing due to error. Cause: ${cause?.javaClass?.simpleName}: ${cause?.message}")
+            if (status.isOk) {
+                super.close(status, trailers)
+                return
+            }
 
-                    if (status.code == Status.Code.UNKNOWN) {
-                        when (cause) {
-                            is InvalidPropertyException -> Status.INVALID_ARGUMENT.withDescription(cause.message)
-                            is EmailInvalidException -> Status.INVALID_ARGUMENT.withDescription(cause.message)
-                            is PasswordInvalidException -> Status.INVALID_ARGUMENT.withDescription(cause.message)
-                            is EmailInvalidException -> Status.INVALID_ARGUMENT.withDescription(cause.message)
-                            is GoogleOAuthException -> Status.INVALID_ARGUMENT.withDescription(cause.message)
+            val cause = status.cause
+            logger.error("Closing due to error. Cause: ${cause?.javaClass?.simpleName}: ${cause?.message}")
 
-                            is SignInException -> Status.UNAUTHENTICATED.withDescription(cause.message)
-                            is AuthenticationException -> Status.UNAUTHENTICATED.withDescription(cause.message)
+            if (status.code != Status.Code.UNKNOWN) {
+                super.close(status, trailers)
+                return
+            }
 
-                            is UserNotFoundException -> Status.NOT_FOUND.withDescription(cause.message)
-                            is NotFoundException -> Status.NOT_FOUND.withDescription(cause.message)
+            val newStatus = when (cause) {
+                is InvalidPropertyException -> Status.INVALID_ARGUMENT.withDescription(cause.message)
+                is EmailInvalidException -> Status.INVALID_ARGUMENT.withDescription(cause.message)
+                is PasswordInvalidException -> Status.INVALID_ARGUMENT.withDescription(cause.message)
+                is GoogleOAuthException -> Status.INVALID_ARGUMENT.withDescription(cause.message)
 
-                            is AlreadyExistsException -> Status.ALREADY_EXISTS.withDescription(cause.message)
-                            is EmailAlreadyExistsException -> Status.ALREADY_EXISTS.withDescription(cause.message)
+                is SignInException -> Status.UNAUTHENTICATED.withDescription(cause.message)
+                is AuthenticationException -> Status.UNAUTHENTICATED.withDescription(cause.message)
 
-                            else -> Status.UNKNOWN
-                        }
-                    } else {
-                        status
-                    }
-                } else {
-                    status
-                }
+                is UserNotFoundException -> Status.NOT_FOUND.withDescription(cause.message)
+                is NotFoundException -> Status.NOT_FOUND.withDescription(cause.message)
+
+                is AlreadyExistsException -> Status.ALREADY_EXISTS.withDescription(cause.message)
+                is EmailAlreadyExistsException -> Status.ALREADY_EXISTS.withDescription(cause.message)
+
+                else -> Status.UNKNOWN
+            }
 
             super.close(newStatus, trailers)
         }
