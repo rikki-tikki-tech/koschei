@@ -49,4 +49,6 @@ jooq = { group = "org.jooq", name = "jooq", version = "3.19.9" }
 postgresql = { group = "org.postgresql", name = "postgresql", version = "42.7.3" }
 flyway-database-postgresql = { group = "org.flywaydb", name = "flyway-database-postgresql", version = "10.14.0" }
 
+konform = { group = "io.konform", name = "konform", version = "0.6.1" }
+
 kotlin-test-junit = { group = "org.jetbrains.kotlin", name = "kotlin-test-junit", version = "1.9.23" }
