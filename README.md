@@ -160,5 +160,3 @@ The example sources are organized into the following top-level folders:
 [stub]: stub
 [stub-android]: stub-android
 [stub-lite]: stub-lite
-
-deploy
