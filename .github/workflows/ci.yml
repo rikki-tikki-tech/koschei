@@ -51,7 +51,6 @@ jobs:
           envs: JDBC_URL,JDBC_USERNAME,JDBC_PASSWORD,JWT_DOMAIN,JWT_SECRET,GOOGLE_OAUTH_CLIENT_SECRET
           script: |            
             # Clean old images
-            echo 123
             docker info
             docker container prune -f
             docker image prune -f
