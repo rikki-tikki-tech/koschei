@@ -45,7 +45,7 @@ jobs:
           GOOGLE_OAUTH_CLIENT_SECRET: ${{ secrets.GOOGLE_OAUTH_CLIENT_SECRET }}
         with:
           host: ${{ secrets.DEPLOY_HOST_KOSCHEI }}
-          username: "koschei"
+          username: "deployer"
           key: ${{ secrets.DEPLOY_KEY }}
           script_stop: true
           envs: JDBC_URL,JDBC_USERNAME,JDBC_PASSWORD,JWT_DOMAIN,JWT_SECRET,GOOGLE_OAUTH_CLIENT_SECRET
