@@ -25,6 +25,10 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
 
+      - name: 💥 Purge broken Gradle locks
+        run: |
+          rm -rf ~/.gradle/caches ~/.gradle/wrapper "$GITHUB_WORKSPACE/.gradle"
+
       - name: 📦 🐳 Docker image build and push
         run: ./gradlew jib
 
