@@ -25,9 +25,16 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
 
-      - name: 💥 Purge broken Gradle locks
+      - name: 🔪 Kill stray Gradle daemons
         run: |
-          rm -rf ~/.gradle/caches ~/.gradle/wrapper "$GITHUB_WORKSPACE/.gradle"
+          ./gradlew --stop || true
+          pkill -f '.*GradleDaemon.*' || true
+
+      # вычищаем именно файлы‑блокировки
+      - name: 💥 Purge Gradle lock files
+        run: |
+          find ~/.gradle -name "*.lock" -type f -print -delete
+          rm -rf "$GITHUB_WORKSPACE/.gradle"
 
       - name: 📦 🐳 Docker image build and push
         run: ./gradlew jib
