@@ -25,7 +25,6 @@ data class User(
     companion object {
         private val validateUser = Validation<User> {
             User::firstName ifPresent {
-                minLength(2)
                 maxLength(64)
             }
         }
